@@ -1,0 +1,51 @@
+name: 'MS Teams Notifications'
+description: 'Send MS Teams notifications from workflows easily'
+author: 'sergioaten'
+
+branding:
+  icon: send
+  color: blue
+
+inputs:
+  jobStatus:
+    description: 'Job status'
+    required: true
+    default: '${{ job.status }}'
+
+  title:
+    description: 'MS Teams msg title'
+    required: true
+    default: '${{ github.workflow }} > ${{ github.ref_name }} (${{ github.run_number }})'
+  
+  lastCommit:
+    description: 'Last commit message'
+    required: true
+    default: '${{ github.event.head_commit.message }}'
+
+  steps:
+    description: 'Workflow Steps'
+    required: true
+
+  factsTitle:
+    description: 'MS Teams facts title'
+    required: false
+
+  facts:
+    description: 'MS Teams facts'
+    required: false
+  
+  webhook:
+    description: 'MS Teams webhook'
+    required: true
+    default: ''
+
+  buttons:
+    description: 'MS Teams buttons'
+    required: false
+
+outputs:
+  jsonPayload:
+    description: 'MS Teams json payload'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

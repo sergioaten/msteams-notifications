@@ -1,0 +1,55 @@
+{
+  "name": "msteams-notifications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "argparse": "^2.0.1",
+    "asynckit": "^0.4.0",
+    "axios": "^1.4.0",
+    "before-after-hook": "^2.2.3",
+    "combined-stream": "^1.0.8",
+    "data-uri-to-buffer": "^4.0.1",
+    "delayed-stream": "^1.0.0",
+    "deprecation": "^2.3.1",
+    "fetch-blob": "^3.2.0",
+    "follow-redirects": "^1.15.2",
+    "form-data": "^4.0.0",
+    "formdata-polyfill": "^4.0.10",
+    "github": "github:actions/github",
+    "install": "^0.13.0",
+    "is-plain-object": "^5.0.0",
+    "js-yaml": "^4.1.0",
+    "mime-db": "^1.52.0",
+    "mime-types": "^2.1.35",
+    "node-domexception": "^1.0.0",
+    "node-fetch": "^3.3.1",
+    "npm": "^9.7.2",
+    "once": "^1.4.0",
+    "proxy-from-env": "^1.1.0",
+    "tr46": "^0.0.3",
+    "tunnel": "^0.0.6",
+    "universal-user-agent": "^6.0.0",
+    "uuid": "^8.3.2",
+    "web-streams-polyfill": "^3.2.1",
+    "webidl-conversions": "^3.0.1",
+    "whatwg-url": "^5.0.0",
+    "wrappy": "^1.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergioaten/msteams-notifications.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergioaten/msteams-notifications/issues"
+  },
+  "homepage": "https://github.com/sergioaten/msteams-notifications#readme"
+}
