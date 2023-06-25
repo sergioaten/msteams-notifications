@@ -3,19 +3,6 @@ const yaml = require('js-yaml');
 const axios = require('axios');
 const github = require('@actions/github');
 
-// Acceder al contexto de GitHub
-const context = github.context;
-
-// Obtener información del repositorio y del commit
-const repoOwner = context.repo.owner;
-const repoName = context.repo.repo;
-const commitSHA = context.sha;
-
-console.log(`Repo owner: ${repoOwner}`);
-console.log(`Repo name: ${repoName}`);
-console.log(`Commit SHA: ${commitSHA}`);
-
-
 try {
   const title = core.getInput('title');
   const jobStatus = core.getInput('jobStatus');
@@ -51,7 +38,7 @@ try {
     const repoName = context.repo.repo;
     const commitSHA = context.sha;
     const lastCommit = core.getInput('lastCommit');
-    json.sections[1].text = `<a href="https://github.com/${ repoOwner }/${ repoName }/commit/${ commitSHA }">${ lastCommit }</a>`;
+    json.sections[1].text = `Last commit: <a href="https://github.com/${ repoOwner }/${ repoName }/commit/${ commitSHA }">${ lastCommit }</a>`;
 
     const factsInput = core.getInput('facts');
     if (factsInput) {
