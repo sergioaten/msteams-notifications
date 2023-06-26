@@ -9,22 +9,20 @@ branding:
 inputs:
   jobStatus:
     description: 'Job status'
-    required: true
     default: '${{ job.status }}'
 
   title:
     description: 'MS Teams msg title'
-    required: true
+    required: false
     default: '${{ github.workflow }} > ${{ github.ref_name }} (${{ github.run_number }})'
   
   lastCommit:
     description: 'Last commit message'
-    required: true
     default: '${{ github.event.head_commit.message }}'
 
   steps:
     description: 'Workflow Steps'
-    required: true
+    required: false
 
   factsTitle:
     description: 'MS Teams facts title'
@@ -32,6 +30,10 @@ inputs:
 
   facts:
     description: 'MS Teams facts'
+    required: false
+
+  sections:
+    description: 'MS Teams Sections'
     required: false
   
   webhook:
@@ -42,10 +44,16 @@ inputs:
   buttons:
     description: 'MS Teams buttons'
     required: false
+  
+  dry_run:
+    description: 'Send notification if true'
+    required: true
+    default: 'false'
 
 outputs:
   jsonPayload:
     description: 'MS Teams json payload'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
