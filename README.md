@@ -4,78 +4,99 @@ This GitHub action allows you to send notifications to Microsoft Teams from your
 
 ## Usage
 
-To use this action, include the following step in your workflow:
+To use this action, include the following step in your workflow (see inputs and examples for more information):
 
 ```yaml
 - name: MS Teams Notifications
-  uses: <username>/<repository>@<tag>
+  uses: sergioaten/msteams-notifications@v0.1-beta
   with:
-    jobStatus: ${{ job.status }}
-    title: ${{ github.workflow }} > ${{ github.ref_name }} (${{ github.run_number }})
-    lastCommit: ${{ github.event.head_commit.message }}
-    steps: <workflow-steps>
+    steps: ${{ toJson(steps) }}
     factsTitle: <facts-title>
-    facts: <facts>
+    facts: <facts yaml format>
     webhook: <Teams-webhook-URL>
-    buttons: <buttons>
+    buttons: <buttons yaml format>
 ```
+
+See [Microsoft Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using?tabs=cURL) for more information on building the YAML objects.
 
 ## Inputs
 
-- `jobStatus` (required): Job status. Should be provided by the workflow.
-- `title` (required): Title of the Teams message. Can contain GitHub context variables.
-- `lastCommit` (required): Last commit message. Can contain GitHub context variables.
-- `steps` (required): Workflow steps in JSON format.
-- `factsTitle` (optional): Title of the facts in HTML format.
-- `facts` (optional): Facts in YAML format.
-- `webhook` (required): Teams webhook URL.
-- `buttons` (optional): Buttons in YAML format.
+| Input        | Description                                                                | Required | Default value                                                              |
+| ------------ | -------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
+| `title`      | Title of the Teams message.                                                | No       | ${{ github.workflow }} > ${{ github.ref_name }} (${{ github.run_number }}) |
+| `steps`      | Workflow steps in JSON format. Recommendation: ${{ toJson(steps) }}        | No       | -                                                                          |
+| `factsTitle` | Title of the facts. Supports HTML                                          | No       | Facts                                                                      |
+| `facts`      | Facts in YAML format.                                                      | No       | -                                                                          |
+| `sections`   | Overwrite steps & facts and you can build your custom section as you want. | No       | -                                                                          |
+| `webhook`    | Teams webhook URL.                                                         | Yes      | -                                                                          |
+| `buttons`    | Buttons in YAML format.                                                    | No       | -                                                                          |
+| `dry_run`    | Dont send notification if true. Default is false.                          | No       | false                                                                      |
 
 ## Outputs
 
 - `jsonPayload`: JSON payload for Teams.
 
-## Example
+## Examples
 
-Here's an example of how to use this action in your workflow:
+Here are examples of how to use this action in your workflow:
+
+### Example 1
 
 ```yaml
-on: [push]
-
-jobs:
-  example:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run tests
-        id: test
-        run: |
-          # Run your tests here
-
-      - name: Send MS Teams notification
-        id: notification
-        uses: sergioaten/msteams-notifications@v0.1-beta
-        with:
-          jobStatus: ${{ job.status }}
-          title: ${{ github.workflow }} > ${{ github.ref_name }} (${{ github.run_number }})
-          steps: ${{ toJson(steps) }}
-          factsTitle: "Workflow Details"
-          facts: |
-            - Author: John Doe
-            - Version: 1.0.0
-          webhook: ${{ secrets.MS_TEAMS_WEBHOOK }}
-          buttons: |
-            - type: OpenUri
-              name: View in GitHub
-              targets:
-                - os: default
-                  uri: https://github.com/user/repo
+- name: Send MS Teams notification
+  id: notification
+  if: always()
+  uses: sergioaten/msteams-notifications@v0.1-beta
+  with:
+    webhook: ${{ secrets.MSTEAMS_WEBHOOK }}
 ```
 
-**Note:** Make sure to replace `<username>/<repository>` and `<tag>` with the correct information for your action.
+![Example 1](https://i.imgur.com/O7xRTPi.png)
+
+### Example 2
+
+```yaml
+- name: Send MS Teams notification
+  id: notification
+  if: always()
+  uses: sergioaten/msteams-notifications@v0.1-beta
+  with:
+    steps: ${{ toJson(steps) }}
+    factsTitle: "Workflow Details"
+    facts: |
+      - Author: John Doe
+      - Version: 1.0.0
+    webhook: ${{ secrets.MS_TEAMS_WEBHOOK }}
+    buttons: |
+      - type: OpenUri
+        name: View in GitHub
+        targets:
+          - os: default
+            uri: https://github.com/user/repo
+```
+
+![Example 2](https://i.imgur.com/sxINtZ1.png)
+
+### Example 3
+
+```yaml
+- name: Send MS Teams notification
+  id: notification
+  if: always()
+  uses: sergioaten/msteams-notifications@v0.1-beta
+  with:
+    webhook: ${{ secrets.MSTEAMS_WEBHOOK }}
+    sections: |
+      - text: This is a test with a test section
+        facts:
+          - name: This is a test fact nº1
+            value: This is the value nº1
+          - name: This is a test fact nº2
+            value: This is the value nº2
+      - text: <h1><i><strong>do you want more? you can use HTML! :)</h1></i></strong>
+```
+
+![Example 3](https://i.imgur.com/0KoJuqF.png)
 
 ## Contribution
 

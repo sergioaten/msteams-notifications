@@ -47,7 +47,7 @@ inputs:
   
   dry_run:
     description: 'Send notification if true'
-    required: true
+    required: false
     default: 'false'
 
 outputs:
