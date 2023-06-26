@@ -17,8 +17,6 @@ To use this action, include the following step in your workflow (see inputs and 
     buttons: <buttons yaml format>
 ```
 
-See [Microsoft Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using?tabs=cURL) for more information on building the YAML objects.
-
 ## Inputs
 
 | Input        | Description                                                                | Required | Default value                                                              |
@@ -31,6 +29,8 @@ See [Microsoft Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/w
 | `webhook`    | Teams webhook URL.                                                         | Yes      | -                                                                          |
 | `buttons`    | Buttons in YAML format.                                                    | No       | -                                                                          |
 | `dry_run`    | Dont send notification if true. Default is false.                          | No       | false                                                                      |
+
+See [Microsoft Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using?tabs=cURL) for more information on building the YAML objects.
 
 ## Outputs
 
