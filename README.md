@@ -40,7 +40,7 @@ See [Microsoft Docs](https://learn.microsoft.com/en-us/microsoftteams/platform/w
 
 Here are examples of how to use this action in your workflow:
 
-### Example 1
+### Example 1 - Basic
 
 ```yaml
 - name: Send MS Teams notification
@@ -53,7 +53,7 @@ Here are examples of how to use this action in your workflow:
 
 ![Example 1](https://i.imgur.com/O7xRTPi.png)
 
-### Example 2
+### Example 2 - Default Template + Buttons
 
 ```yaml
 - name: Send MS Teams notification
@@ -61,23 +61,23 @@ Here are examples of how to use this action in your workflow:
   if: always()
   uses: sergioaten/msteams-notifications@v0.1-beta
   with:
+    webhook: ${{ secrets.MS_TEAMS_WEBHOOK }}
     steps: ${{ toJson(steps) }}
     factsTitle: "Workflow Details"
     facts: |
       - Author: John Doe
       - Version: 1.0.0
-    webhook: ${{ secrets.MS_TEAMS_WEBHOOK }}
     buttons: |
       - type: OpenUri
         name: View in GitHub
         targets:
           - os: default
-            uri: https://github.com/user/repo
+            uri: https://github.com/sergioaten/msteams-notifications
 ```
 
 ![Example 2](https://i.imgur.com/sxINtZ1.png)
 
-### Example 3
+### Example 3 - Custom Section
 
 ```yaml
 - name: Send MS Teams notification
@@ -87,7 +87,7 @@ Here are examples of how to use this action in your workflow:
   with:
     webhook: ${{ secrets.MSTEAMS_WEBHOOK }}
     sections: |
-      - text: This is a test with a test section
+      - text: This is a test with a custom section
         facts:
           - name: This is a test fact nº1
             value: This is the value nº1
@@ -97,6 +97,40 @@ Here are examples of how to use this action in your workflow:
 ```
 
 ![Example 3](https://i.imgur.com/0KoJuqF.png)
+
+### Example 4 - Custom Section + Buttons
+
+```yaml
+- name: Send MS Teams notification
+  id: notification
+  if: always()
+  uses: sergioaten/msteams-notifications@v0.1-beta
+  with:
+    webhook: ${{ secrets.MSTEAMS_WEBHOOK }}
+    sections: |
+      - text: New task created
+        facts:
+          - name: Task ID
+            value: TSK-123
+          - name: Assigned to
+            value: John Doe
+          - name: Priority
+            value: High
+      - text: <h1><i><strong>More details</h1></i></strong>
+    buttons: |
+      - type: OpenUri
+        name: View Task
+        targets:
+          - os: default
+            uri: https://example.com/tasks/TSK-123
+      - type: OpenUri
+        name: View application
+        targets:
+          - os: default
+            uri: https://myapplication.com
+```
+
+![Example 4](https://i.imgur.com/Nc8jHL8.png)
 
 ## Contribution
 
