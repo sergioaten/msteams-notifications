@@ -8,7 +8,7 @@ To use this action, include the following step in your workflow (see inputs and 
 
 ```yaml
 - name: MS Teams Notifications
-  uses: sergioaten/msteams-notifications@v0.1-beta
+  uses: sergioaten/msteams-notifications@v0.11-beta
   with:
     steps: ${{ toJson(steps) }}
     factsTitle: <facts-title>
